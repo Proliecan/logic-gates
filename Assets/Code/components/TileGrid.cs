@@ -19,34 +19,30 @@ namespace Code.components
             public Color Color = Color.black;
         }
 
-        Cell[,] _cells;
+        public Cell[,] Cells{ get; private set; }
 
         private void Update(){
             // if no cells populate
-            if (_cells == null){
+            if (Cells == null){
                 populateGrid();
             }
         }
 
         private void populateGrid(){
-            _cells = new Cell[(int) size.x, (int) size.y];
+            Cells = new Cell[(int) size.x, (int) size.y];
             for (int x = 0; x < size.x; x++){
                 for (int y = 0; y < size.y; y++){
-                    _cells[x, y] = new Cell();
+                    Cells[x, y] = new Cell();
                 }
-            }
-            // log success
-            if (verbose){
-                Debug.Log("Grid populated");
             }
         }
 
         public void OnRenderObject(){
             Gizmos.DrawGrid(origin, cellSize, (int) size.x, (int) size.y, borderColor);
-            if (_cells != null){
+            if (Cells != null){
                 for (int x = 0; x < size.x; x++){
                     for (int y = 0; y < size.y; y++){
-                        DrawCell(new Vector2(x, y), borderColor, _cells[x, y].Color);
+                        DrawCell(new Vector2(x, y), borderColor, Cells[x, y].Color);
                     }
                 }
             }
@@ -77,7 +73,7 @@ namespace Code.components
             if (cell.x < 0 || cell.x > size.x || cell.y < 0 || cell.y > size.y){
                 throw new System.Exception("Cell is not on the grid");
             }
-            _cells[(int) cell.x, (int) cell.y].Color = fillColor;
+            Cells[(int) cell.x, (int) cell.y].Color = fillColor;
         }
     
         /// <summary>
