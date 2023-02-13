@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959e4ff5db203584fbaf01c5244b2a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {x: -5, y: -5}
-  cellSize: {x: 1, y: 1}
+  origin: {x: 0, y: 0}
+  cellSize: {x: 1, y: 2}
   size: {x: 10, y: 10}
   color: {r: 1, g: 1, b: 1, a: 1}

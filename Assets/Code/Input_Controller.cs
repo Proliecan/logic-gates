@@ -18,7 +18,9 @@ namespace Code
                 // get grid
                 Grid grid = FindObjectOfType<Grid>();
                 // is on grid?
-                Debug.Log(grid.isOnGrid(worldPos));
+                Debug.Log(worldPos);
+                Debug.Log(grid.getCell(worldPos));
+                Debug.Log(grid.getCellRect(grid.getCell(worldPos)));
             }
             
         }
