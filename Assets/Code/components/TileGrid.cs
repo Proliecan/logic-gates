@@ -24,11 +24,11 @@ namespace Code.components
         private void Update(){
             // if no cells populate
             if (Cells == null){
-                populateGrid();
+                PopulateGrid();
             }
         }
 
-        private void populateGrid(){
+        private void PopulateGrid(){
             Cells = new Cell[(int) size.x, (int) size.y];
             for (int x = 0; x < size.x; x++){
                 for (int y = 0; y < size.y; y++){
@@ -56,7 +56,7 @@ namespace Code.components
         /// <param name="fillColor">The color to fill the cell with</param>
         /// <exception cref="Exception">Cell is not on the grid</exception>
         private void DrawCell(Vector2 cell, Color borderColor, Color fillColor){
-            Gizmos.DrawRect(getCellRect(cell), borderColor, fillColor);
+            Gizmos.DrawRect(GetCellRect(cell), borderColor, fillColor);
             //log the cell
             if (verbose){
                 Debug.Log("Cell " + cell + " colored");
@@ -106,7 +106,7 @@ namespace Code.components
         /// </summary>
         /// <param name="cell">The cell to get the rect of</param>
         /// <returns>The rect of the cell</returns>
-        public Rect getCellRect(Vector2 cell){
+        public Rect GetCellRect(Vector2 cell){
             if (cell.x < 0 || cell.x > size.x || cell.y < 0 || cell.y > size.y){
                 throw new System.Exception("Cell is not on the grid");
             }
@@ -119,6 +119,8 @@ namespace Code.components
         }
     }
     
+    // only for editor
+    #if UNITY_EDITOR
     // add button for populating grid to editor
     [CustomEditor(typeof(TileGrid))]
     public class GridEditor : Editor
@@ -134,4 +136,5 @@ namespace Code.components
             }
         }
     }
+    #endif
 }
