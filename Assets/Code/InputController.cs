@@ -1,4 +1,3 @@
-using System;
 using Code.components;
 using UnityEngine;
 
@@ -6,8 +5,6 @@ namespace Code
 {
     public class InputController : MonoBehaviour
     {
-        Vector2 _lastCell = new Vector2(-1, -1);
-
         private Camera _camera;
         private TileGrid _tileGrid;
 
@@ -21,25 +18,29 @@ namespace Code
                 Vector3 mousePos = Input.mousePosition;
                 Vector2 worldPos = _camera.ScreenToWorldPoint(mousePos);
                 // if any mouse button is pressed
-                if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) 
-                    colorCell(worldPos);
+                try{
+                    ColorCell(worldPos);
+                }
+                catch {
+                    // ignore
+                }
             }
         }
 
-        void colorCell(Vector2 worldPos){
-            try{
-                Vector2 cell = _tileGrid.GetCell(worldPos);
-                if (cell != _lastCell){
-                    if (Input.GetMouseButton(0))
-                        _tileGrid.ColorCell(cell, Color.red);
-                    else if (Input.GetMouseButton(1))
-                        _tileGrid.ColorCell(cell, Color.black);
-                    _lastCell = cell;
-                }
+        Vector2 _lastCell = new Vector2(-1, -1);
+        void ColorCell(Vector2 worldPos) {
+            // when hovering over a cell that did not just get colored, color it red with the left mouse button or green with the right mouse button
+            Vector2 cell = _tileGrid.GetCell(worldPos);
+            bool leftMouseButton = Input.GetMouseButton(0);
+            bool rightMouseButton = Input.GetMouseButton(1);
+            if (cell != _lastCell && (leftMouseButton || rightMouseButton)){
+                _lastCell = cell;
+                _tileGrid.ColorCell(cell, leftMouseButton ? Color.red : Color.green);
             }
-            catch {
-                //ignore
-            }
+            
+            // reset last cell when mouse is released
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+                _lastCell = new Vector2(-1, -1);
         }
     }
 }
