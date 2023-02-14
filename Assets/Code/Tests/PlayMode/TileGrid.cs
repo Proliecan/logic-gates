@@ -66,12 +66,12 @@ namespace Code.Tests.PlayMode
             grid.size = new Vector2(10, 10);
             grid.borderColor = Color.white;
 
-            Assert.AreEqual(new Rect(0f, 0f, 1, 2), grid.getCellRect(new Vector2(0, 0)));
-            Assert.AreEqual(new Rect(1f, 2f, 1, 2), grid.getCellRect(new Vector2(1, 1)));
-            Assert.AreEqual(new Rect(9f, 18f, 1, 2), grid.getCellRect(new Vector2(9, 9)));
+            Assert.AreEqual(new Rect(0f, 0f, 1, 2), grid.GetCellRect(new Vector2(0, 0)));
+            Assert.AreEqual(new Rect(1f, 2f, 1, 2), grid.GetCellRect(new Vector2(1, 1)));
+            Assert.AreEqual(new Rect(9f, 18f, 1, 2), grid.GetCellRect(new Vector2(9, 9)));
 
             try{
-                grid.getCellRect(new Vector2(-1, -1));
+                grid.GetCellRect(new Vector2(-1, -1));
                 Assert.Fail("Should have thrown an exception");
             }
             catch (Exception e){
@@ -89,10 +89,10 @@ namespace Code.Tests.PlayMode
 
             // call populate grid using reflection
             var method = grid.GetType()
-                .GetMethod("populateGrid",
+                .GetMethod("PopulateGrid",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            method.Invoke(grid, null);
-        
+            if (method != null) method.Invoke(grid, null);
+
             // assert the Cells array is the correct size in both dimensions
             Assert.AreEqual(grid.size.x, grid.Cells.GetLength(0));
             Assert.AreEqual(grid.size.y, grid.Cells.GetLength(1));
@@ -108,9 +108,9 @@ namespace Code.Tests.PlayMode
 
             // call populate grid using reflection
             var method = grid.GetType()
-                .GetMethod("populateGrid",
+                .GetMethod("PopulateGrid",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            method.Invoke(grid, null);
+            if (method != null) method.Invoke(grid, null);
 
             // give the grid a chance to update
             yield return null;

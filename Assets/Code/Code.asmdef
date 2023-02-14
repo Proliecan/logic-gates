@@ -1,3 +1,17 @@
 {
-	"name": "Code"
+    "name": "Code",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3909e0ded640c6a4898c97e7f5bb20d8",
+        "GUID:c7a01204388cce244a59a713d581eb2a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
