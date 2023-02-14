@@ -91,8 +91,8 @@ namespace Code.Tests.PlayMode
             var method = grid.GetType()
                 .GetMethod("PopulateGrid",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            method.Invoke(grid, null);
-        
+            if (method != null) method.Invoke(grid, null);
+
             // assert the Cells array is the correct size in both dimensions
             Assert.AreEqual(grid.size.x, grid.Cells.GetLength(0));
             Assert.AreEqual(grid.size.y, grid.Cells.GetLength(1));
@@ -110,7 +110,7 @@ namespace Code.Tests.PlayMode
             var method = grid.GetType()
                 .GetMethod("PopulateGrid",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            method.Invoke(grid, null);
+            if (method != null) method.Invoke(grid, null);
 
             // give the grid a chance to update
             yield return null;

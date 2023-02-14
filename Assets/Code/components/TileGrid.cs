@@ -1,14 +1,13 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using Gizmos = Code.core.Gizmos;
+using Gizmos = Code.gizmos.Gizmos;
 
-namespace Code.components
-{
+namespace Code.components {
     [ExecuteInEditMode]
     public class TileGrid : MonoBehaviour
     {
-        [SerializeField] private bool verbose = false;
+        [SerializeField] private bool verbose;
         //represents a grid with its origin in the center
         public Vector2 origin = new Vector2(0, 0);
         public Vector2 cellSize = new Vector2(1, 1);
@@ -52,11 +51,11 @@ namespace Code.components
         /// Draw a cell
         /// </summary>
         /// <param name="cell">The cell to draw</param>
-        /// <param name="borderColor">The color of the border</param>
-        /// <param name="fillColor">The color to fill the cell with</param>
+        /// <param name="pBorderColor">The color of the border</param>
+        /// <param name="pFillColor">The color to fill the cell with</param>
         /// <exception cref="Exception">Cell is not on the grid</exception>
-        private void DrawCell(Vector2 cell, Color borderColor, Color fillColor){
-            Gizmos.DrawRect(GetCellRect(cell), borderColor, fillColor);
+        private void DrawCell(Vector2 cell, Color pBorderColor, Color pFillColor){
+            Gizmos.DrawRect(GetCellRect(cell), pBorderColor, pFillColor);
             //log the cell
             if (verbose){
                 Debug.Log("Cell " + cell + " colored");
@@ -71,7 +70,7 @@ namespace Code.components
         /// <exception cref="Exception">Cell is not on the grid</exception>
         public void ColorCell(Vector2 cell, Color fillColor){
             if (cell.x < 0 || cell.x > size.x || cell.y < 0 || cell.y > size.y){
-                throw new System.Exception("Cell is not on the grid");
+                throw new Exception("Cell is not on the grid");
             }
             Cells[(int) cell.x, (int) cell.y].Color = fillColor;
         }
@@ -93,7 +92,7 @@ namespace Code.components
         /// <returns>The cell that the position is in</returns>
         public Vector2 GetCell(Vector2 pos){
             if (!isOnGrid(pos)){
-                throw new System.Exception("Position is not on the grid");
+                throw new Exception("Position is not on the grid");
             }
             return new Vector2(
                 Mathf.FloorToInt((pos.x - origin.x) / cellSize.x),
@@ -108,7 +107,7 @@ namespace Code.components
         /// <returns>The rect of the cell</returns>
         public Rect GetCellRect(Vector2 cell){
             if (cell.x < 0 || cell.x > size.x || cell.y < 0 || cell.y > size.y){
-                throw new System.Exception("Cell is not on the grid");
+                throw new Exception("Cell is not on the grid");
             }
             return new Rect(
                 origin.x + cell.x * cellSize.x,
@@ -119,8 +118,6 @@ namespace Code.components
         }
     }
     
-    // only for editor
-    #if UNITY_EDITOR
     // add button for populating grid to editor
     [CustomEditor(typeof(TileGrid))]
     public class GridEditor : Editor
@@ -136,5 +133,4 @@ namespace Code.components
             }
         }
     }
-    #endif
 }
