@@ -118,6 +118,8 @@ namespace Code.components {
         }
     }
     
+    //only for editor
+    #if UNITY_EDITOR
     // add button for populating grid to editor
     [CustomEditor(typeof(TileGrid))]
     public class GridEditor : Editor
@@ -133,4 +135,5 @@ namespace Code.components {
             }
         }
     }
+    #endif
 }
