@@ -28,6 +28,7 @@ jobs:
           path: Library
           key: Test-Library
       - uses: game-ci/unity-test-runner@v2
+        id: test
         name: 🧪Run ${{ matrix.testMode }} Tests
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
