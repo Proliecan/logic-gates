@@ -10,6 +10,47 @@ on:
       - ".github/workflows/**"
 
 jobs:
+  test:
+    name: 🧪Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        testMode:
+          - playmode
+          - editmode
+    steps:
+      - uses: actions/checkout@v3
+        name: 📥Checkout
+      - name: 🧺Cache Library Folder
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Test-Library
+      - uses: game-ci/unity-test-runner@v2
+        name: 🧪Run ${{ matrix.testMode }} Tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: ${{ matrix.testMode }} tests
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: test-results/${{ matrix.testMode }}
+          coverage_path: test-results/${{ matrix.testMode }}/coverage
+      - uses: actions/upload-artifact@v3
+        name: 📤Upload Test Results
+        with:
+          name: ${{ matrix.testMode }}-results
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: actions/upload-artifact@v3
+        name: 📤Upload Coverage
+        with:
+          name: ${{ matrix.testMode }}-coverage
+          path: ${{ steps.tests.outputs.coveragePath }}
+
+
   build:
     name: 🔧${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
