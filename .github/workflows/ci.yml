@@ -1,13 +1,18 @@
 name: ⚙CI-Pipeline
 
 on:
+  pull_request:
   push:
+    branches:
+      - main
+      - develop
     paths:
       - "Assets/**"
       - "Packages/**"
       - "ProjectSettings/**"
       - ".gitignore"
       - ".github/workflows/**"
+    
 
 jobs:
   test:
