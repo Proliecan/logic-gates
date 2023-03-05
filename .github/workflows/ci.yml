@@ -8,6 +8,7 @@ on:
       - "ProjectSettings/**"
       - ".gitignore"
       - ".github/workflows/**"
+  workflow_dispatch: {}
 
 jobs:
   build:
