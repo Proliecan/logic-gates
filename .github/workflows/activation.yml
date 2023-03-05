@@ -5,6 +5,7 @@ on:
 
 jobs:
   activation:
+    name: 📜☑Activate License
     runs-on: ubuntu-latest
     steps:
       - id: getManualLicenseFile
