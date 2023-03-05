@@ -39,18 +39,11 @@ jobs:
           checkName: ${{ matrix.testMode }} tests
           testMode: ${{ matrix.testMode }}
           artifactsPath: test-results/${{ matrix.testMode }}
-          coverageOptions: "generateAdditionalMetrics;generateHtmlReport;generateBadgeReport"
       - uses: actions/upload-artifact@v3
         name: 📤Upload Test Results
         with:
           name: ${{ matrix.testMode }}-results
           path: ${{ steps.test.outputs.artifactsPath }}
-      - uses: actions/upload-artifact@v3
-        name: 📤Upload Coverage
-        with:
-          name: ${{ matrix.testMode }}-coverage
-          path: ${{ steps.test.outputs.coveragePath }}
-
 
   build:
     name: 🔧${{ matrix.targetPlatform }}
