@@ -37,3 +37,7 @@ jobs:
         with:
           name: ${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+      - name: 🧺Cache Library Folder
+        uses: actions/cache@v3
+        with:
+          path: ~/Library
