@@ -26,11 +26,12 @@ jobs:
           # - WebGL # WebGL.
     steps:
       - uses: actions/checkout@v3
-      # - name: 🧺Cache Library Folder
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/Library
-      #     key: ${{ matrix.targetPlatform }}-library
+        name: 📥Checkout
+      - name: 🧺Cache Library Folder
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: ${{ matrix.targetPlatform }}-library
       - uses: game-ci/unity-builder@v2
         name: ☕Build ${{ matrix.targetPlatform }}
         env:
