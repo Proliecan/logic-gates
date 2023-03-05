@@ -43,16 +43,17 @@ jobs:
         name: 📤Upload Test Results
         with:
           name: ${{ matrix.testMode }}-results
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          path: ${{ steps.test.outputs.artifactsPath }}
       - uses: actions/upload-artifact@v3
         name: 📤Upload Coverage
         with:
           name: ${{ matrix.testMode }}-coverage
-          path: ${{ steps.tests.outputs.coveragePath }}
+          path: ${{ steps.test.outputs.coveragePath }}
 
 
   build:
     name: 🔧${{ matrix.targetPlatform }}
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
