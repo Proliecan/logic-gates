@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Code.Core.gizmos
 {
+    //HAS TO BE MANUALLY TESTED!!!
     public static class Gizmos
     {
         static Material _lineMaterial;

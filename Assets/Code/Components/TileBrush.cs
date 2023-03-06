@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.Tilemaps;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Code.components
+namespace Code.Components
 {
     public class TileBrush
     {
@@ -30,8 +31,8 @@ namespace Code.components
         // initialize
         private TileBrush(){
             Tile = null;
-            // find tilemap in scene
-            Tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+            // find tilemap in scene without assuming the name
+            Tilemap = Object.FindObjectOfType<Tilemap>();
         }
 
         // reset instance
@@ -40,21 +41,22 @@ namespace Code.components
         }
 
         // get tile index from mouse position
-        public Vector2Int GetTileIndex(Vector2 mousePosition){
-            Vector3Int tileIndex = Tilemap.WorldToCell(mousePosition);
+        public Vector2Int GetTileIndex(Vector2 worldPosition){
+            Vector3Int tileIndex = Tilemap.WorldToCell(worldPosition);
             return new Vector2Int(tileIndex.x, tileIndex.y);
         }
 
         // paint tile from mouse position
-        public void Paint(Vector2 mousePosition){
-            Paint(mousePosition, Tile);
+        public void Paint(Vector2 index){
+            Paint(index, Tile);
         }
 
-        public void Paint(Vector2 mousePosition, TileBase tile){
-            Paint(GetTileIndex(mousePosition), tile);
+        public void Paint(Vector2 index, TileBase tile){
+            Paint(GetTileIndex(index), tile);
         }
 
         // paint tile
+        [ExcludeFromCoverage]
         private void Paint(Vector2Int position, TileBase tile = null){
             if (Tile != null && Tilemap != null){
                 Tilemap.SetTile(new Vector3Int(position.x, position.y, 0), tile);
@@ -72,6 +74,7 @@ namespace Code.components
 
 #if UNITY_EDITOR
     // custom plugin window
+    [ExcludeFromCoverage]
     class TileBrushWindow : EditorWindow
     {
         [MenuItem("Window/2D/Tile Brush")]
