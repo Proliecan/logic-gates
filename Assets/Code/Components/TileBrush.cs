@@ -13,7 +13,7 @@ namespace Code.Components
         // singleton
         private static TileBrush _instance;
         public static TileBrush Instance => _instance ??= new TileBrush();
-        
+
         public TileBase Tile{ get; set; }
         public Tilemap Tilemap{ get; set; }
 
@@ -51,6 +51,7 @@ namespace Code.Components
         // paint tile
         private Vector2Int _lastPaintedTile = new Vector2Int(-1, -1);
         private TileBase _lastPaintedTileBase = null;
+
         [ExcludeFromCoverage]
         private void Paint(Vector2Int position, TileBase tile = null){
             if (Tile != null && Tilemap != null && (_lastPaintedTile != position || _lastPaintedTileBase != tile)){
