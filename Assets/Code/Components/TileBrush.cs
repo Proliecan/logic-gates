@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,16 +14,8 @@ namespace Code.Components
         private static TileBrush _instance;
         public static TileBrush Instance => _instance ??= new TileBrush();
 
-        public TileBase Tile{ get; private set; }
-        public Tilemap Tilemap{ get; private set; }
-
-        public void SetTile(TileBase tile){
-            Tile = tile;
-        }
-
-        public void SetTilemap(Tilemap tilemap){
-            Tilemap = tilemap;
-        }
+        public TileBase Tile{ get; set; }
+        public Tilemap Tilemap{ get; set; }
 
 #if UNITY_EDITOR
         public bool debugMode = false;
@@ -56,13 +49,19 @@ namespace Code.Components
         }
 
         // paint tile
+        private Vector2Int _lastPaintedTile = new Vector2Int(-1, -1);
+        private TileBase _lastPaintedTileBase = null;
+
         [ExcludeFromCoverage]
         private void Paint(Vector2Int position, TileBase tile = null){
-            if (Tile != null && Tilemap != null){
+            if (Tile != null && Tilemap != null && (_lastPaintedTile != position || _lastPaintedTileBase != tile)){
                 Tilemap.SetTile(new Vector3Int(position.x, position.y, 0), tile);
 #if UNITY_EDITOR
                 if (debugMode) Debug.Log($"Painted {tile} at {position}");
 #endif
+                // save last painted tile
+                _lastPaintedTile = position;
+                _lastPaintedTileBase = tile;
             }
         }
 
@@ -97,10 +96,10 @@ namespace Code.Components
 
             EditorGUILayout.Space();
 
-            TileBrush.Instance.SetTile(
-                (TileBase) EditorGUILayout.ObjectField("Tile", TileBrush.Instance.Tile, typeof(TileBase), false));
-            TileBrush.Instance.SetTilemap((Tilemap) EditorGUILayout.ObjectField("Tilemap", TileBrush.Instance.Tilemap,
-                typeof(Tilemap), true));
+            TileBrush.Instance.Tile =
+                (TileBase) EditorGUILayout.ObjectField("Tile", TileBrush.Instance.Tile, typeof(TileBase), false);
+            TileBrush.Instance.Tilemap = (Tilemap) EditorGUILayout.ObjectField("Tilemap", TileBrush.Instance.Tilemap,
+                typeof(Tilemap), true);
 
             EditorGUILayout.Space();
 

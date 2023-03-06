@@ -19,9 +19,9 @@ namespace Code.Tests.PlayMode
             var tile = ScriptableObject.CreateInstance<Tile>();
             
             // Act
-            TileBrush.Instance.SetTilemap(tilemap);
-            TileBrush.Instance.SetTile(tile);
-            
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
+
             // Assert
             Assert.AreEqual(tile, TileBrush.Instance.Tile);
             Assert.AreEqual(tilemap, TileBrush.Instance.Tilemap);
@@ -42,8 +42,8 @@ namespace Code.Tests.PlayMode
             var tile = ScriptableObject.CreateInstance<Tile>();
             
             // Act
-            TileBrush.Instance.SetTilemap(tilemap);
-            TileBrush.Instance.SetTile(tile);
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
             TileBrush.Instance.Reset();
             
             // Assert
@@ -64,9 +64,9 @@ namespace Code.Tests.PlayMode
             tilemap.transform.SetParent(grid.transform);
             
             var tile = ScriptableObject.CreateInstance<Tile>();
-            TileBrush.Instance.SetTilemap(tilemap);
-            TileBrush.Instance.SetTile(tile);
-            
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
+
             // Act
             var index = TileBrush.Instance.GetTileIndex(new Vector2(1, 1));
             
@@ -87,9 +87,9 @@ namespace Code.Tests.PlayMode
             tilemap.transform.SetParent(grid.transform);
             
             var tile = ScriptableObject.CreateInstance<Tile>();
-            TileBrush.Instance.SetTilemap(tilemap);
-            TileBrush.Instance.SetTile(tile);
-            
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
+
             // Act
             TileBrush.Instance.Paint(new Vector2(1, 1));
             
@@ -110,8 +110,8 @@ namespace Code.Tests.PlayMode
             tilemap.transform.SetParent(grid.transform);
             
             var tile = ScriptableObject.CreateInstance<Tile>();
-            TileBrush.Instance.SetTilemap(tilemap);
-            
+            TileBrush.Instance.Tilemap = tilemap;
+
             // Act
             TileBrush.Instance.Paint(new Vector2(1, 1), tile);
             
@@ -132,9 +132,9 @@ namespace Code.Tests.PlayMode
             tilemap.transform.SetParent(grid.transform);
             
             var tile = ScriptableObject.CreateInstance<Tile>();
-            TileBrush.Instance.SetTilemap(tilemap);
-            TileBrush.Instance.SetTile(tile);
-            
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
+
             // Act
             TileBrush.Instance.Paint(new Vector2(1, 1));
             TileBrush.Instance.Erase(new Vector2(1, 1));
