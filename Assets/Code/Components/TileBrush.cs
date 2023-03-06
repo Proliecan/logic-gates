@@ -49,13 +49,18 @@ namespace Code.Components
         }
 
         // paint tile
+        private Vector2Int _lastPaintedTile = new Vector2Int(-1, -1);
+        private TileBase _lastPaintedTileBase = null;
         [ExcludeFromCoverage]
         private void Paint(Vector2Int position, TileBase tile = null){
-            if (Tile != null && Tilemap != null){
+            if (Tile != null && Tilemap != null && (_lastPaintedTile != position || _lastPaintedTileBase != tile)){
                 Tilemap.SetTile(new Vector3Int(position.x, position.y, 0), tile);
 #if UNITY_EDITOR
                 if (debugMode) Debug.Log($"Painted {tile} at {position}");
 #endif
+                // save last painted tile
+                _lastPaintedTile = position;
+                _lastPaintedTileBase = tile;
             }
         }
 
