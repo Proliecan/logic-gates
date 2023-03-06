@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.gizmos
+namespace Code.Core.gizmos
 {
     public static class Gizmos
     {
