@@ -1,9 +1,8 @@
-﻿using System;
-using Code.components;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.Components
 {
+    // HAS TO BE MANUALLY TESTED!!!
     public class InputController : MonoBehaviour
     {
         private Camera _mainCam;

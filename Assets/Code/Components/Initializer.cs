@@ -1,5 +1,4 @@
-﻿using Code.components;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Code.Components
@@ -9,7 +8,7 @@ namespace Code.Components
         public TileBase tile;
 
         // start is called before the first frame update
-        private void Start(){
+        public void Start(){
             // initialize tile brush
             TileBrush.Instance.SetTile(tile);
             
