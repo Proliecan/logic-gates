@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,17 +13,9 @@ namespace Code.Components
         // singleton
         private static TileBrush _instance;
         public static TileBrush Instance => _instance ??= new TileBrush();
-
-        public TileBase Tile{ get; private set; }
-        public Tilemap Tilemap{ get; private set; }
-
-        public void SetTile(TileBase tile){
-            Tile = tile;
-        }
-
-        public void SetTilemap(Tilemap tilemap){
-            Tilemap = tilemap;
-        }
+        
+        public TileBase Tile{ get; set; }
+        public Tilemap Tilemap{ get; set; }
 
 #if UNITY_EDITOR
         public bool debugMode = false;
@@ -97,10 +90,10 @@ namespace Code.Components
 
             EditorGUILayout.Space();
 
-            TileBrush.Instance.SetTile(
-                (TileBase) EditorGUILayout.ObjectField("Tile", TileBrush.Instance.Tile, typeof(TileBase), false));
-            TileBrush.Instance.SetTilemap((Tilemap) EditorGUILayout.ObjectField("Tilemap", TileBrush.Instance.Tilemap,
-                typeof(Tilemap), true));
+            TileBrush.Instance.Tile =
+                (TileBase) EditorGUILayout.ObjectField("Tile", TileBrush.Instance.Tile, typeof(TileBase), false);
+            TileBrush.Instance.Tilemap = (Tilemap) EditorGUILayout.ObjectField("Tilemap", TileBrush.Instance.Tilemap,
+                typeof(Tilemap), true);
 
             EditorGUILayout.Space();
 

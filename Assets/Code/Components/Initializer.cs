@@ -10,7 +10,7 @@ namespace Code.Components
         // start is called before the first frame update
         public void Start(){
             // initialize tile brush
-            TileBrush.Instance.SetTile(tile);
+            TileBrush.Instance.Tile = tile;
             
 #if !UNITY_EDITOR
             // destroy the game object in build
