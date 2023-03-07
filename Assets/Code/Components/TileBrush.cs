@@ -10,9 +10,6 @@ namespace Code.Components
 {
     public class TileBrush
     {
-        // singleton
-        private static TileBrush _instance;
-        public static TileBrush Instance => _instance ??= new TileBrush();
 
         public TileBase Tile{ get; set; }
         public Tilemap Tilemap{ get; set; }
@@ -20,6 +17,12 @@ namespace Code.Components
 #if UNITY_EDITOR
         public bool debugMode = false;
 #endif
+
+        #region Singleton, Initialization, and Reset
+
+        // singleton
+        private static TileBrush _instance;
+        public static TileBrush Instance => _instance ??= new TileBrush();
 
         // initialize
         private TileBrush(){
@@ -33,11 +36,15 @@ namespace Code.Components
             _instance = null;
         }
 
+        #endregion
+
         // get tile index from mouse position
-        public Vector2Int GetTileIndex(Vector2 worldPosition){
+        private Vector2Int GetTileIndex(Vector2 worldPosition){
             Vector3Int tileIndex = Tilemap.WorldToCell(worldPosition);
             return new Vector2Int(tileIndex.x, tileIndex.y);
         }
+
+        #region Paint and Erase
 
         // paint tile from mouse position
         public void Paint(Vector2 index){
@@ -69,7 +76,11 @@ namespace Code.Components
         public void Erase(Vector2 mousePosition){
             Paint(mousePosition, null);
         }
+
+        #endregion
     }
+
+    #region Editor Window
 
 #if UNITY_EDITOR
     // custom plugin window
@@ -107,4 +118,6 @@ namespace Code.Components
         }
     }
 #endif
+
+    #endregion
 }
