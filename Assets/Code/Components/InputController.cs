@@ -55,9 +55,6 @@ namespace Code.Components
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
                 }
-                
-                // draw frame around tile at mouse position
-                TileBrush.Instance.DrawFrame(mousePosition);
             }
         }
     }
