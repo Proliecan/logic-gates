@@ -26,10 +26,14 @@ namespace Code.Components
         }
 
         private void Update(){
-            // get mouse position
+            // mouse input
+            bool leftClick = Input.GetMouseButton(0);
+            bool rightClick = Input.GetMouseButtonDown(1);
+
             if (_mainCamNotNull){
+                // paint on left click
                 Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                if (Input.GetMouseButton(0)){
+                if (leftClick){
                     switch (currentBrushMode){
                         case BrushMode.Paint:
                             TileBrush.Instance.Paint(mousePosition);
@@ -45,12 +49,15 @@ namespace Code.Components
                 }
 
                 // change mode on right click
-                if (Input.GetMouseButtonDown(1)){
+                if (rightClick){
                     currentBrushMode = currentBrushMode == BrushMode.Paint ? BrushMode.Erase : BrushMode.Paint;
 #if UNITY_EDITOR
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
                 }
+                
+                // draw frame around tile at mouse position
+                TileBrush.Instance.DrawFrame(mousePosition);
             }
         }
     }
