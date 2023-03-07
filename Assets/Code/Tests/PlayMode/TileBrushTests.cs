@@ -150,5 +150,28 @@ namespace Code.Tests.PlayMode
             // return null to please the compiler
             yield return null;
         }
+
+        [UnityTest]
+        public IEnumerator TileBrush_GetTileRect(){
+            // Arrange
+            var grid = new GameObject().AddComponent<Grid>();
+            var tilemap = new GameObject().AddComponent<Tilemap>();
+            tilemap.transform.SetParent(grid.transform);
+            
+            var tile = ScriptableObject.CreateInstance<Tile>();
+            TileBrush.Instance.Tilemap = tilemap;
+            TileBrush.Instance.Tile = tile;
+            
+            // Act
+            var rect = TileBrush.Instance.GetTileRect(new Vector2(1, 1));
+            
+            // Assert
+            Assert.AreEqual(new Rect(1, 1, 1, 1), rect);
+            
+            // Cleanup
+            
+            // return null to please the compiler
+            yield return null;
+        }
     }
 }

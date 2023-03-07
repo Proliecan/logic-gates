@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Code.Core.gizmos
 {
     //HAS TO BE MANUALLY TESTED!!!
+    [ExcludeFromCoverage]
     public static class Gizmos
     {
         static Material _lineMaterial;

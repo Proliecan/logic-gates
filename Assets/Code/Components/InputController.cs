@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.TestTools;
+using Gizmos = Code.Core.gizmos.Gizmos;
 
 namespace Code.Components
 {
     // HAS TO BE MANUALLY TESTED!!!
+    [ExcludeFromCoverage]
     public class InputController : MonoBehaviour
     {
         private Camera _mainCam;
@@ -30,7 +34,7 @@ namespace Code.Components
             bool leftClick = Input.GetMouseButton(0);
             bool rightClick = Input.GetMouseButtonDown(1);
 
-            if (_mainCamNotNull){
+            if (_mainCamNotNull){                             
                 // paint on left click
                 Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
                 if (leftClick){
@@ -55,6 +59,16 @@ namespace Code.Components
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
                 }
+            }
+        }
+        
+        // playmode gizmos
+        private void OnRenderObject(){
+            if (_mainCamNotNull){
+                // draw tile rect
+                Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+                Rect tileRect = TileBrush.Instance.GetTileRect(mousePosition);
+                Gizmos.DrawRect(tileRect, Color.grey, Color.clear);
             }
         }
     }

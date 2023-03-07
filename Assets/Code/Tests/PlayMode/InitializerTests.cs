@@ -7,6 +7,7 @@ using UnityEngine.TestTools;
 
 namespace Code.Tests.PlayMode
 {
+    [ExcludeFromCoverage]
     public class InitializerTests
     {
         [UnityTest]
