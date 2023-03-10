@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Code.Components
 {
     // HAS TO BE MANUALLY TESTED!!!
+    [ExcludeFromCoverage]
     public class InputController : MonoBehaviour
     {
         private Camera _mainCam;
         private bool _mainCamNotNull;
+
+        private GizmosDrawer _gizmosDrawer;
 
         public enum BrushMode
         {
@@ -23,13 +27,18 @@ namespace Code.Components
         private void Start(){
             _mainCam = Camera.main;
             _mainCamNotNull = _mainCam != null;
+            _gizmosDrawer = FindObjectOfType<GizmosDrawer>();
         }
 
         private void Update(){
-            // get mouse position
+            // mouse input
+            bool leftClick = Input.GetMouseButton(0);
+            bool rightClick = Input.GetMouseButtonDown(1);
+
             if (_mainCamNotNull){
+                // paint on left click
                 Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                if (Input.GetMouseButton(0)){
+                if (leftClick){
                     switch (currentBrushMode){
                         case BrushMode.Paint:
                             TileBrush.Instance.Paint(mousePosition);
@@ -45,11 +54,18 @@ namespace Code.Components
                 }
 
                 // change mode on right click
-                if (Input.GetMouseButtonDown(1)){
+                if (rightClick){
                     currentBrushMode = currentBrushMode == BrushMode.Paint ? BrushMode.Erase : BrushMode.Paint;
 #if UNITY_EDITOR
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
+                }
+
+
+                // draw tile rect
+                Vector3Int cellPosition = TileBrush.Instance.Tilemap.WorldToCell(mousePosition);
+                if (_gizmosDrawer != null){
+                    _gizmosDrawer.CellPosition = (Vector2Int) cellPosition;
                 }
             }
         }
