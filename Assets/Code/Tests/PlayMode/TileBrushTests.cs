@@ -163,8 +163,7 @@ namespace Code.Tests.PlayMode
             TileBrush.Instance.Tile = tile;
             
             // Act
-            var rect = TileBrush.Instance.GetTileRect(new Vector2(1, 1));
-            
+            var rect = TileBrush.Instance.GetTileRect(new Vector2Int(1, 1));
             // Assert
             Assert.AreEqual(new Rect(1, 1, 1, 1), rect);
             

@@ -43,11 +43,11 @@ namespace Code.Components
             Vector3Int tileIndex = Tilemap.WorldToCell(worldPosition);
             return new Vector2Int(tileIndex.x, tileIndex.y);
         }
-        
-        // get tile rect
-        public Rect GetTileRect(Vector2 worldPosition){
+
+        // this time with cell position as parameter
+        public Rect GetTileRect(Vector2Int cellPosition){
             // get cell center
-            Vector3 cellCenter = Tilemap.GetCellCenterWorld(Tilemap.WorldToCell(worldPosition));
+            Vector3 cellCenter = Tilemap.GetCellCenterWorld((Vector3Int)cellPosition);
             // get cell size
             Vector3 cellSize = Tilemap.cellSize;
             // calculate rect origin

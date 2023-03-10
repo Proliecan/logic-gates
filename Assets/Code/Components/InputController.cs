@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.TestTools;
-using Gizmos = Code.Core.gizmos.Gizmos;
 
 namespace Code.Components
 {
@@ -11,6 +9,8 @@ namespace Code.Components
     {
         private Camera _mainCam;
         private bool _mainCamNotNull;
+
+        private GizmosDrawer _gizmosDrawer;
 
         public enum BrushMode
         {
@@ -27,6 +27,7 @@ namespace Code.Components
         private void Start(){
             _mainCam = Camera.main;
             _mainCamNotNull = _mainCam != null;
+            _gizmosDrawer = FindObjectOfType<GizmosDrawer>();
         }
 
         private void Update(){
@@ -34,7 +35,7 @@ namespace Code.Components
             bool leftClick = Input.GetMouseButton(0);
             bool rightClick = Input.GetMouseButtonDown(1);
 
-            if (_mainCamNotNull){                             
+            if (_mainCamNotNull){
                 // paint on left click
                 Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
                 if (leftClick){
@@ -59,16 +60,13 @@ namespace Code.Components
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
                 }
-            }
-        }
-        
-        // playmode gizmos
-        private void OnRenderObject(){
-            if (_mainCamNotNull){
+
+
                 // draw tile rect
-                Vector2 mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                Rect tileRect = TileBrush.Instance.GetTileRect(mousePosition);
-                Gizmos.DrawRect(tileRect, Color.grey, Color.clear);
+                Vector3Int cellPosition = TileBrush.Instance.Tilemap.WorldToCell(mousePosition);
+                if (_gizmosDrawer != null){
+                    _gizmosDrawer.CellPosition = (Vector2Int) cellPosition;
+                }
             }
         }
     }
