@@ -62,6 +62,10 @@ namespace Code.Core.gizmos
         }
 
         public static void DrawRect(Rect rect, Color borderColor, Color fillColor){
+            DrawRect(rect, 1, borderColor, fillColor);
+        }
+        
+        public static void DrawRect(Rect rect, float borderThickness, Color borderColor, Color fillColor){
             CreateLineMaterial();
             // Apply the line material
             _lineMaterial.SetPass(0);
@@ -72,16 +76,46 @@ namespace Code.Core.gizmos
             GL.Vertex3(rect.xMax, rect.yMax, 0);
             GL.Vertex3(rect.xMin, rect.yMax, 0);
             GL.End();
-            GL.Begin(GL.LINES);
+            // draw border with centered on the perimiter
+            Vector3[] vertices = new Vector3[8];
+            vertices[0] = new Vector3(rect.xMin+borderThickness/2, rect.yMin+borderThickness/2, 0);
+            vertices[1] = new Vector3(rect.xMax-borderThickness/2, rect.yMin+borderThickness/2, 0);
+            vertices[2] = new Vector3(rect.xMax-borderThickness/2, rect.yMax-borderThickness/2, 0);
+            vertices[3] = new Vector3(rect.xMin+borderThickness/2, rect.yMax-borderThickness/2, 0);
+            vertices[4] = new Vector3(rect.xMin-borderThickness/2, rect.yMin-borderThickness/2, 0);
+            vertices[5] = new Vector3(rect.xMax+borderThickness/2, rect.yMin-borderThickness/2, 0);
+            vertices[6] = new Vector3(rect.xMax+borderThickness/2, rect.yMax+borderThickness/2, 0);
+            vertices[7] = new Vector3(rect.xMin-borderThickness/2, rect.yMax+borderThickness/2, 0);
+            int[] triangles = new int[24];
+            triangles[0] = 0;
+            triangles[1] = 4;
+            triangles[2] = 1;
+            triangles[3] = 1;
+            triangles[4] = 4;
+            triangles[5] = 5;
+            triangles[6] = 1;
+            triangles[7] = 5;
+            triangles[8] = 2;
+            triangles[9] = 2;
+            triangles[10] = 5;
+            triangles[11] = 6;
+            triangles[12] = 2;
+            triangles[13] = 6;
+            triangles[14] = 3;
+            triangles[15] = 3;
+            triangles[16] = 6;
+            triangles[17] = 7;
+            triangles[18] = 3;
+            triangles[19] = 7;
+            triangles[20] = 0;
+            triangles[21] = 0;
+            triangles[22] = 7;
+            triangles[23] = 4;
+            GL.Begin(GL.TRIANGLES);
             GL.Color(borderColor);
-            GL.Vertex3(rect.xMin, rect.yMin, 0);
-            GL.Vertex3(rect.xMax, rect.yMin, 0);
-            GL.Vertex3(rect.xMax, rect.yMin, 0);
-            GL.Vertex3(rect.xMax, rect.yMax, 0);
-            GL.Vertex3(rect.xMax, rect.yMax, 0);
-            GL.Vertex3(rect.xMin, rect.yMax, 0);
-            GL.Vertex3(rect.xMin, rect.yMax, 0);
-            GL.Vertex3(rect.xMin, rect.yMin, 0);
+            foreach (var t in triangles){
+                GL.Vertex(vertices[t]);
+            }
             GL.End();
         }
     }

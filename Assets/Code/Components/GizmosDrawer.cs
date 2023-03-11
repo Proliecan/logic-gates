@@ -10,6 +10,7 @@ namespace Code.Components
     public class GizmosDrawer : MonoBehaviour
     {
         public Color cellBorderColor = Color.gray;
+        public float cellBorderThickness = 0.05f;
 
         public Color gridColor = new(88, 88, 88);
         public Vector2Int gridMargin = Vector2Int.one;
@@ -40,7 +41,7 @@ namespace Code.Components
 
                 // draw tile rect
                 Rect tileRect = TileBrush.Instance.GetTileRect(CellPosition);
-                Gizmos.DrawRect(tileRect, cellBorderColor, Color.clear);
+                Gizmos.DrawRect(tileRect, cellBorderThickness,  cellBorderColor, Color.clear);
             }
         }
     }
