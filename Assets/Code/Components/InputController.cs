@@ -72,6 +72,13 @@ namespace Code.Components
                     Vector2 mouseDelta = (Vector2)_mainCam.ScreenToWorldPoint(Input.mousePosition) - _moveStartPosition;
                     _mainCam.transform.position -= (Vector3)mouseDelta;
                 }
+                
+                // zoom camera on scroll
+                float scroll = Input.GetAxis("Mouse ScrollWheel");
+                if (scroll != 0){
+                    _mainCam.orthographicSize -= scroll * 10;
+                    _mainCam.orthographicSize = Mathf.Clamp(_mainCam.orthographicSize, 1, 20);
+                }
 
 
 
