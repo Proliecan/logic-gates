@@ -30,6 +30,7 @@ namespace Code.Components
             _gizmosDrawer = FindObjectOfType<GizmosDrawer>();
         }
 
+        Vector2 _moveStartPosition = Vector2.zero;
         private void Update(){
             // mouse input
             bool leftClick = Input.GetMouseButton(0);
@@ -60,6 +61,18 @@ namespace Code.Components
                     if (debugMode) Debug.Log($"Changed mode to {currentBrushMode}");
 #endif
                 }
+                
+                // move camera on middle mouse button hold
+                // save mouse position in world space on middle mouse button down
+                if (Input.GetMouseButtonDown(2)){
+                    _moveStartPosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+                }
+                // move camera on middle mouse button hold
+                if (Input.GetMouseButton(2)){
+                    Vector2 mouseDelta = (Vector2)_mainCam.ScreenToWorldPoint(Input.mousePosition) - _moveStartPosition;
+                    _mainCam.transform.position -= (Vector3)mouseDelta;
+                }
+
 
 
                 // draw tile rect
